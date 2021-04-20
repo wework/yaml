@@ -221,7 +221,8 @@ func (e *encoder) structv(tag string, in reflect.Value, comment comments) {
 
 	commentsArr := makeEmptyComments(len(fieldsIndex))
 
-	if fIndex := getYamlMeta(in, fieldsIndex); fIndex.IsValid() {
+	// ensure valid non nil struct meta before using
+	if fIndex := getYamlMeta(in, fieldsIndex); (fIndex.IsValid() && fIndex.Elem() != reflect.Value{}) {
 		meta := fIndex.Elem().Interface().(StructMeta)
 		fieldsIndex = meta.GetFieldsIndex()
 		commentsArr = meta.GetComments()
