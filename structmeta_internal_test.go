@@ -92,10 +92,6 @@ func (s *S) TestStructMetaNil(c *C) {
 	for _, in := range structMetaNilTests {
 		c.Logf("test %s", in.expected)
 
-		// test := &testStruct{}
-		// err := Unmarshal([]byte(expected), test)
-		// c.Assert(err, Equals, nil)
-
 		actual, err := Marshal(in.test)
 		c.Assert(err, Equals, nil)
 		c.Assert(string(actual), Equals, in.expected)
