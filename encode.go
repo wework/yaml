@@ -223,9 +223,10 @@ func (e *encoder) structv(tag string, in reflect.Value, comment comments) {
 
 	// ensure valid non nil struct meta before using
 	if fIndex := getYamlMeta(in, fieldsIndex); (fIndex.IsValid() && fIndex.Elem() != reflect.Value{}) {
-		meta := fIndex.Elem().Interface().(StructMeta)
-		fieldsIndex = meta.GetFieldsIndex()
-		commentsArr = meta.GetComments()
+		if meta, ok := fIndex.Elem().Interface().(StructMeta); ok {
+			fieldsIndex = meta.GetFieldsIndex()
+			commentsArr = meta.GetComments()
+		}
 	}
 
 	e.mappingv(tag, comment, func() {
